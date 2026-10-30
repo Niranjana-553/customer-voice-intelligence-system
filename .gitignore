@@ -1,0 +1,18 @@
+
+# Virtual environments
+venv/
+venv2/
+env/
+
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

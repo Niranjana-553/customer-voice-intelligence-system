@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Voice Intelligence</title>
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      color: #1a1a2e;
+      background-image: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
+                    url('/static/fashion.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+   
+    .hero {
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(61, 61, 61, 0.9));
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+  
+
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-summary {
+      font-size: 0.99rem;
+      opacity: 0.8;
+      width:80%;
+      max-width: 900px;
+      line-height: 1.7;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .hero a {
+      background: rgb(255, 255, 255);
+      color: #000000;
+      padding: 12px 28px;
+      border-radius: 99px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .hero h1{
+      margin-bottom: 20px;
+    }
+
+    .hero a:hover {
+      transform: scale(1.05);
+      display: inline-block;
+    }
+
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 16px 60px;
+    }
+
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 36px;
+    }
+
+    
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      border: 2px solid #e0e4ef;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: vertical;
+      color: #1a1a2e;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    textarea:focus { border-color: #000000; }
+
+    input[type="submit"] {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      background: #43406f;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    input[type="submit"]:hover { background: #2a2a2a; }
+
+
+    .error {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: #fff1f2;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+      color: #dc2626;
+      font-size: 0.9rem;
+    }
+
+
+    .result {
+      margin-top: 28px;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .result.recommended     { background: #90b89c; border: 2px solid #4e9066; }
+    .result.not-recommended { background: #b09d9e; border: 2px solid #c07474; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-icon  { font-size: 2rem; }
+
+    .result-label { font-size: 1.3rem; font-weight: 700; }
+
+    .recommended     .result-label { color: #1d6a39; }
+    .not-recommended .result-label { color: #732525; }
+
+  
+    .confidence-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .bar-row { margin-bottom: 10px; }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #444;
+    }
+
+    .bar-track {
+      background: #e5e7eb;
+      border-radius: 99px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill          { height: 100%; border-radius: 99px; }
+    .bar-fill.positive { background: #1d5b34; }
+    .bar-fill.negative { background: #642b2b; }
+
+
+    .review-echo {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: rgba(0,0,0,0.04);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #555;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+  </style>
+</head>
+<body>
+
+
+  <section class="hero">
+    <h1>Customer Voice Intelligence System</h1>
+    <p class="hero-summary">
+      Fashion product ratings don't always tell the full story.
+       A 3-star review could mean "decent but wrong size" or "okay but nothing special" ; two very different opinions.
+        That's why customer reviews matter more than numbers alone.
+      Our system uses Machine Learning and Natural Language Processing to analyse the actual words customers use,
+       identifying which phrases signal a great product and which reveal disappointment, giving you a clearer, more reliable picture of what customers truly think.
+    </p>
+    <a href="#analyse">Try Now </a>
+  </section>
+
+ 
+  <div class="container">
+    <h1 class="page-title">Analyse a Review</h1>
+    
+    <div class="card" id="analyse">
+      <form action="/" method="POST">
+        <label for="review">Customer Review</label>
+        <textarea
+          id="review"
+          name="review"
+          placeholder="e.g. The fabric is soft and fits perfectly. I absolutely love this dress!"
+        >{{ review or '' }}</textarea>
+        <input type="submit" value="Analyse"/>
+      </form>
+
+     
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+   
+      {% if prediction %}
+        <div class="result {{ 'recommended' if prediction == 'Recommended' else 'not-recommended' }}">
+
+          <div class="result-header">
+            
+            <span class="result-label">{{ prediction }}</span>
+          </div>
+
+          <div class="confidence-title">Confidence Scores</div>
+
+          <div class="bar-row">
+            <div class="bar-label">
+              <span>Recommended</span>
+              <span>{{ confidence['Recommended'] }}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill positive" style="width: {{ confidence['Recommended'] }}%"></div>
+            </div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-label">
+              <span>Not Recommended</span>
+              <span>{{ confidence['Not Recommended'] }}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill negative" style="width: {{ confidence['Not Recommended'] }}%"></div>
+            </div>
+          </div>
+
+          <div class="review-echo">"{{ review }}"</div>
+
+        </div>
+      {% endif %}
+
+    </div>
+
+    <footer>Powered by Support Vector Machines (SVM) + TF-IDF &nbsp;|&nbsp; Women's E-Commerce Clothing Reviews</footer>
+  </div>
+  <script>
+  // After page reloads with result, scroll straight to the card
+  window.onload = function() {
+    {% if prediction or error %}
+      document.getElementById("analyse").scrollIntoView({ behavior: "smooth" });
+    {% endif %}
+  }
+</script>
+
+</body>
+</html>
